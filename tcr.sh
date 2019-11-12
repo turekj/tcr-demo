@@ -10,7 +10,7 @@ function test() {
     cd `git rev-parse --show-toplevel` # navigate to top-level of git repo
     echo
     echo '-- TEST --'
-    xcodebuild -project TCRDemo.xcodeproj -scheme TCRDemo -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2' test
+    xcodebuild -project TCRDemo.xcodeproj -scheme TCRDemoTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2' test
 }
 function commit() {
     echo
