@@ -10,9 +10,7 @@ function test() {
     cd `git rev-parse --show-toplevel` # navigate to top-level of git repo
     echo
     echo '-- TEST --'
-    echo
-    curl "http://localhost:7890/stopwatch/reset" &>/dev/null # reset timer (if running)
-    make
+    xcodebuild -project TCRDemo.xcodeproj -scheme TCRDemo -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2' test
 }
 function commit() {
     echo
