@@ -1,34 +1,33 @@
-//
-//  TCRDemoTests.swift
-//  TCRDemoTests
-//
-//  Created by Jakub Turek on 12/11/2019.
-//  Copyright © 2019 ELP. All rights reserved.
-//
-
 import XCTest
+import Foundation
 @testable import TCRDemo
 
-class TCRDemoTests: XCTestCase {
+func fetchTODOs(_ completion: @escaping (String) -> Void) {
+    let url = "https://jsonplaceholder.typicode.com/todos"
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    let task = URLSession.shared.dataTask(with: URL(string: url)!) { data, response, error in
+        if let data = data, let result = String(data: data, encoding: .utf8) {
+            completion(result)
         }
+    }
+
+    task.resume()
+}
+
+class TODOFetcherTests: XCTestCase {
+
+    func testFetchesTodos() {
+        var todos = ""
+        let todosFetched = expectation(description: "todos fetched")
+
+        fetchTODOs {
+            todos = $0
+            todosFetched.fulfill()
+        }
+
+        waitForExpectations(timeout: 5)
+        XCTAssertTrue(todos.contains("delectus aut autem"))
+        XCTAssertTrue(todos.contains("qui ullam ratione quibusdam voluptatem quia omnis"))
     }
 
 }
