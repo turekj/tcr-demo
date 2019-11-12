@@ -2,24 +2,8 @@ import XCTest
 import Foundation
 @testable import TCRDemo
 
-class RequestExecutor {
-    init(session: URLSession = .shared) {
-        self.session = session
-    }
-
-    func get(url: URL, _ completion: @escaping (Data?) -> Void) {
-        let task = session.dataTask(with: url) { data, _, _ in
-            completion(data)
-        }
-
-        task.resume()
-    }
-
-    private let session: URLSession
-}
-
 class TODOService {
-    init(requestExecutor: RequestExecutor = RequestExecutor()) {
+    init(requestExecutor: RequestExecuting = RequestExecutor()) {
         self.requestExecutor = requestExecutor
     }
 
@@ -33,7 +17,7 @@ class TODOService {
         }
     }
 
-    private let requestExecutor: RequestExecutor
+    private let requestExecutor: RequestExecuting
 }
 
 class TODOServiceTests: XCTestCase {
@@ -41,7 +25,9 @@ class TODOServiceTests: XCTestCase {
     func testFetchesTodos() {
         var todos = ""
         let todosFetched = expectation(description: "todos fetched")
-        let sut = TODOService()
+        let executor = RequestExecutorSpy()
+        executor.stubbedResponse = "delectus aut autem qui ullam ratione quibusdam voluptatem quia omnis"
+        let sut = TODOService(requestExecutor: executor)
 
         sut.fetchTODOs {
             todos = $0

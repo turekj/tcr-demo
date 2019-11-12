@@ -41,6 +41,7 @@
   </component>
   <component name="ProjectId" id="1TVis1iScnw6MhFLhdlDJQAnKva" />
   <component name="PropertiesComponent">
+    <property name="OBJC.PRESERVED_TARGET_SELECTION" value="TCRDemoTests" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/squash.sh" />
     <property name="node.js.detected.package.eslint" value="true" />
